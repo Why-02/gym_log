@@ -11,21 +11,22 @@ class WorkoutLogsPage extends StatefulWidget {
 
 class _WorkoutLogsPageState extends State<WorkoutLogsPage> {
 
-  List<WorkoutAdder> workouts = [WorkoutAdder()];
+  List<WorkoutAdder> workouts = [];
   
   @override
   Widget build(BuildContext context) {
+    final WIDTH = MediaQuery.of(context).size.width;
+    final HEIGHT = MediaQuery.of(context).size.height;
+    final keyboardOffset = MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
       
       body:Column(
         children: [
           WorkoutLogsHeader(),
-          Container(
-            decoration: BoxDecoration(border: Border.all()),
-            padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
-            height:800,
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth:WIDTH,maxHeight:HEIGHT - 100 - keyboardOffset),
             child: ListView.builder(
-              padding: EdgeInsets.all(0),
+              padding: EdgeInsets.all(10),
               itemCount: workouts.length,
               itemBuilder: (context, index){
               return workouts[workouts.length - index - 1];

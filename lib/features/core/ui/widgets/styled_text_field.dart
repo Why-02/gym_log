@@ -8,8 +8,9 @@ class StyledTextField extends StatefulWidget {
   final TextInputType keyboardType;
   final bool lockable;
   final double? width;
+  bool readOnly;
   bool locked;
-  StyledTextField({super.key, required this.controller, required this.hintText, required this.labelText, this.keyboardType = TextInputType.text, this.lockable = false, this.locked = false, this.width = null});
+  StyledTextField({super.key, required this.controller, required this.hintText, required this.labelText, this.keyboardType = TextInputType.text, this.lockable = false, this.locked = false, this.width ,this.readOnly = false});
 
   @override
   State<StyledTextField> createState() => _StyledTextFieldState();
@@ -18,6 +19,8 @@ class StyledTextField extends StatefulWidget {
 class _StyledTextFieldState extends State<StyledTextField> {
   @override
   Widget build(BuildContext context) {
+    final WIDTH = MediaQuery.of(context).size.width;
+    final HEIGHT = MediaQuery.of(context).size.height;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -33,9 +36,10 @@ class _StyledTextFieldState extends State<StyledTextField> {
           )))
           : SizedBox(width:0)),
         SizedBox(
-          width:(widget.width ?? 250 - 50 * (widget.lockable ? 1 : 0)),
-          height:40,
+          width:(widget.width ?? WIDTH/2 - WIDTH/10 * (widget.lockable ? 1 : 0)),
+          height:HEIGHT/15,
           child: TextField(
+            readOnly: widget.readOnly,
             keyboardType: widget.keyboardType,
             controller: widget.controller,
             decoration: InputDecoration(          
