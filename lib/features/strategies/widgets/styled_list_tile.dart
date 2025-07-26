@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-class StrategyListTile extends StatelessWidget {
-  const StrategyListTile({
-    super.key,
-    required this.strategyName,
-  });
+class StyledListTile extends StatelessWidget {
+  final String tileName;
+  final Function()? onTap;
 
-  final String strategyName;
+  const StyledListTile({
+    super.key,
+    required this.tileName,
+    this.onTap
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +16,11 @@ class StrategyListTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       child: ListTile(
         minTileHeight: 80,
-        title: Text(strategyName, style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),),
+        title: Text(tileName, style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),),
         leading: Icon(Icons.add, size: 24, color: Colors.deepPurple),
         tileColor: Colors.grey[200],
         textColor: Colors.deepPurple,
+        onTap: onTap,
       ),
     );
   }
