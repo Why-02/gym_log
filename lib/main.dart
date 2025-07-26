@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:git_log/features/strategies/strategies_page.dart';
 
 void main() {
@@ -34,4 +35,3 @@ class MyApp extends StatelessWidget {
       home: const StrategiesPage(),
     );
   }
-}
