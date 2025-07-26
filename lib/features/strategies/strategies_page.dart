@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gym_log/core/app_routes.dart';
 import 'package:gym_log/core/static_data/strategy_data.dart' as strategy_data;
 import 'package:gym_log/features/strategies/widgets/styled_list_tile/styled_list_tile.dart';
 
@@ -20,7 +21,15 @@ class StrategiesPage extends StatelessWidget {
             itemCount: strategyList.length,
             itemBuilder: (context, index) => StyledListTile(
               tileName: strategyList[index],
-              onTap: () => debugPrint(index.toString()),
+              onTap: (){
+                switch(index){
+                  case 0 : Navigator.of(context).pushNamed(AppRoutes.trainingSplitsPath);
+                  case 1 : Navigator.of(context).pushNamed(AppRoutes.progressiveOverloadPath);
+                  case 2 : Navigator.of(context).pushNamed(AppRoutes.deloadPath);
+                  case 3 : Navigator.of(context).pushNamed(AppRoutes.mindMuscleConnectionPath);
+                  case _ : debugPrint("index $index does not have a route yet");
+                }
+              },
             )
           ),
         ),
