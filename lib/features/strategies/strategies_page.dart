@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:git_log/core/static_data/strategy_data.dart' as strategy_data;
-import 'package:git_log/features/strategies/widgets/styled_list_tile.dart';
+import 'package:git_log/features/strategies/widgets/styled_list_tile/styled_list_tile.dart';
 
 class StrategiesPage extends StatelessWidget {
   const StrategiesPage({super.key});

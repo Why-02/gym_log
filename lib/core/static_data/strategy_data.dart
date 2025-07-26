@@ -18,8 +18,9 @@ List<String> trainingSplitsList = [
 
 Map<String, String> progressiveOverloadDict = {
   "Idea": '''
-  Progressive overload is a training principle where the stress placed on the body is gradually increased over time.
-  This prevents the body from fully adapting to your current workout routine, helping you avoid plateaus in muscle growth and strength gains.
+  - A training principle where the stress place on the body is gradually increased over time
+  - It prevents the body from fully adapting to your current workout routing
+  - It helps avoid plateaus in muscle growth and strength gains
   ''',
 
   "Simple Form": '''
@@ -27,7 +28,7 @@ Map<String, String> progressiveOverloadDict = {
   This is easy to implement since most gym machines allow the addition of up to two small plates of 2.5 kg.
 
   If you're unable to increase the weight by 2.5 kg, consider adding 1 or 2 extra reps instead.
-  Then, the following week, return to your original rep count and attempt to increase the weight again as planned.
+  The following week, return to your original rep count and attempt to increase the weight again as planned.
   ''',
 
   "Volume-Based Form": '''
