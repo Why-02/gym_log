@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:git_log/core/static_data/strategy_data.dart';
 import 'package:git_log/features/strategies/widgets/styled_strategy_scaffold/styled_strategy_scaffold.dart';
 
-class ProgressiveOverloadSubpage extends StatelessWidget {
-  const ProgressiveOverloadSubpage({super.key});
+class DeloadSubpage extends StatelessWidget{
+  const DeloadSubpage({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return StyledStrategyScaffold(
-      title: "Progressive Overload", 
-      dataDict: progressiveOverloadDict, 
-      imagePath: "assets/images/progressive_overload_img.jpg"
+      title: "Deload",
+      dataDict: deloadDict,
+      imagePath: "assets/images/deload_img.jpg"
     );
   }
 }

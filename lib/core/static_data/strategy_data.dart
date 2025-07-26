@@ -44,3 +44,30 @@ Map<String, String> progressiveOverloadDict = {
   This method works well for hypertrophy and managing fatigue while still promoting overload.
   '''
 };
+
+Map<String, String> deloadDict = {
+  "idea": '''
+  - it is important to take a deloading week from time to time
+  - usually, you can take a deloading week once every 6 to 8 weeks
+  - during deloading, decrease the intensity of your workout to 60 or 70%. 
+  - Ex:
+    - number of sets is halfed
+    - number of reps stays the same
+    - weight comes down to 70% of the usual weigth carried
+  '''
+};
+
+Map<String, String> mindMuscleConnectionDict = {
+  "idea": '''
+  - This strategy is about mentally focusing on the muscle you are activating during the exercice
+  - It makes you less likely to let other muscles compensate, which improves technique and activation while reducing  the risk of injury
+  
+  ''',
+  "Implementation": '''
+  - Practice Mind-Muscle Connection by:
+    - Slowing down reps to focus on the tension in the muscle
+    - Using lower weights when necessary to focus on control and technique
+    - Visualize the muscle shortening and lengthening
+    - tap or touch the muscle to make check its activation in exercices where this is possible
+  '''
+};
