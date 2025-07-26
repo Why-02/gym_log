@@ -11,15 +11,34 @@ class WorkoutLogsPage extends StatefulWidget {
 
 class _WorkoutLogsPageState extends State<WorkoutLogsPage> {
 
+  List<WorkoutAdder> workouts = [WorkoutAdder()];
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       
-      body:WorkoutLogsHeader(),
+      body:Column(
+        children: [
+          WorkoutLogsHeader(),
+          Container(
+            decoration: BoxDecoration(border: Border.all()),
+            padding: EdgeInsetsGeometry.symmetric(horizontal: 10),
+            height:800,
+            child: ListView.builder(
+              padding: EdgeInsets.all(0),
+              itemCount: workouts.length,
+              itemBuilder: (context, index){
+              return workouts[workouts.length - index - 1];
+            }),
+          )
+        ],
+      ),
       floatingActionButton: FloatingActionButton(onPressed: (){
-        showDialog(context: context, builder: (BuildContext context){
-          return AlertDialog(insetPadding: EdgeInsets.symmetric(vertical: 200),content:WorkoutAdder());
+        setState(() {
+          workouts.insert(0,WorkoutAdder());
         });
+        
+        
       },child:Icon(Icons.add)
       ),
     );
