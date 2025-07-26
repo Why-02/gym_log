@@ -1,3 +1,3 @@
-# git_log
+# gym_log
 
 Project is under construction
