@@ -5,16 +5,18 @@ import 'package:git_log/features/strategies/widgets/styled_card/styled_card_body
 import 'package:git_log/features/strategies/widgets/styled_card/styled_card_body_title.dart';
 
 class StyledCardBody extends StatelessWidget {
+  final String title;
+  final String content;
+  final String? imagePath;
+  final bool initiallyExpanded;
+
   const StyledCardBody({
     super.key,
     required this.title,
     required this.content,
     required this.imagePath,
+    this.initiallyExpanded = false
   });
-
-  final String title;
-  final String content;
-  final String? imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +25,17 @@ class StyledCardBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          StyledCardBodyTitle(title: title),
-          const SizedBox(height: 12),
-          StyledCardBodyContent(content: content),
-          if (imagePath != null)
-            StyledCardBodyImage(imagePath: imagePath),
+          ExpansionTile(
+            shape: Border(),
+            initiallyExpanded: initiallyExpanded,
+            title: StyledCardBodyTitle(title: title),
+            children: [
+              const SizedBox(height: 12),
+              StyledCardBodyContent(content: content),
+              if (imagePath != null)
+                StyledCardBodyImage(imagePath: imagePath),
+            ],
+          ),
         ],
       ),
     );

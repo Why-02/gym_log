@@ -5,12 +5,14 @@ class StyledCard extends StatelessWidget {
   final String title;
   final String content;
   final String? imagePath;
+  final bool initiallyExpanded;
 
   const StyledCard({
     super.key,
     required this.title,
     required this.content,
-    this.imagePath
+    this.imagePath,
+    this.initiallyExpanded = false,
   });
 
   @override
@@ -19,7 +21,7 @@ class StyledCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: StyledCardBody(title: title, content: content, imagePath: imagePath),
+      child: StyledCardBody(title: title, content: content, imagePath: imagePath, initiallyExpanded: initiallyExpanded),
     );
   }
 }

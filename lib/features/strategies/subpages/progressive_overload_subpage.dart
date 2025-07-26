@@ -11,7 +11,7 @@ class ProgressiveOverloadSubpage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Progressive Overload"),
+        title: const Text("Progressive Overload", style: TextStyle(fontWeight: FontWeight.bold),),
       ),
       body: ListView.builder(
         itemCount: progressiveOverloadDict.length,
@@ -20,7 +20,7 @@ class ProgressiveOverloadSubpage extends StatelessWidget {
           final content = progressiveOverloadDict.values.elementAt(index);
 
           if (index == 0){
-            return StyledCard(title: title, content: content, imagePath: 'assets/images/progressive_overload_img.jpg');
+            return StyledCard(title: title, content: content, imagePath: 'assets/images/progressive_overload_img.jpg', initiallyExpanded: true,);
           }
           else{
             return StyledCard(title: title, content: content);
