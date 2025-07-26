@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:git_log/features/workout_logs/widgets/workout_adder.dart';
-import 'package:git_log/features/workout_logs/widgets/workout_logs_header.dart';
+import 'package:gym_log/features/workout_logs/widgets/workout_adder.dart';
+import 'package:gym_log/features/workout_logs/widgets/workout_logs_header.dart';
 
 class WorkoutLogsPage extends StatefulWidget {
   const WorkoutLogsPage({super.key});
@@ -24,7 +24,7 @@ class _WorkoutLogsPageState extends State<WorkoutLogsPage> {
         children: [
           WorkoutLogsHeader(),
           ConstrainedBox(
-            constraints: BoxConstraints(maxWidth:WIDTH,maxHeight:HEIGHT - 100 - keyboardOffset),
+            constraints: BoxConstraints(maxWidth:WIDTH,maxHeight:HEIGHT - 120 - keyboardOffset),
             child: ListView.builder(
               padding: EdgeInsets.all(10),
               itemCount: workouts.length,

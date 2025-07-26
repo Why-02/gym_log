@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:git_log/features/strategies/widgets/styled_card/styled_card_body_content.dart';
-import 'package:git_log/features/strategies/widgets/styled_card/styled_card_body_image.dart';
-import 'package:git_log/features/strategies/widgets/styled_card/styled_card_body_title.dart';
+import 'package:gym_log/features/strategies/widgets/styled_card/styled_card_body_content.dart';
+import 'package:gym_log/features/strategies/widgets/styled_card/styled_card_body_image.dart';
+import 'package:gym_log/features/strategies/widgets/styled_card/styled_card_body_title.dart';
 
 class StyledCardBody extends StatelessWidget {
   final String title;

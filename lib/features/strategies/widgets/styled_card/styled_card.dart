@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:git_log/features/strategies/widgets/styled_card/styled_card_body.dart';
+import 'package:gym_log/features/strategies/widgets/styled_card/styled_card_body.dart';
 
 class StyledCard extends StatelessWidget {
   final String title;

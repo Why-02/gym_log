@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:git_log/features/core/ui/widgets/styled_text_field.dart';
-import 'package:git_log/features/workout_logs/widgets/utils.dart';
+import 'package:gym_log/core/ui/widgets/styled_text_field.dart';
+import 'package:gym_log/features/workout_logs/widgets/utils.dart';
 
 class WorkoutAdder extends StatefulWidget {
   const WorkoutAdder({super.key});

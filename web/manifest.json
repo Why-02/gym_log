@@ -1,6 +1,6 @@
 {
-    "name": "git_log",
-    "short_name": "git_log",
+    "name": "gym_log",
+    "short_name": "gym_log",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
