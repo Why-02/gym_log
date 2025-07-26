@@ -50,9 +50,14 @@ class _ProfilePageState extends State<ProfilePage> {
 @override
   void initState() {
     super.initState();
-    setState(() {
-      heightText = heightController.text;
-    });
+
+    heightController.addListener(() {
+      setState(() {
+        heightText = heightController.text;
+        })
+      ;}
+    );
+
   }
 
   @override
