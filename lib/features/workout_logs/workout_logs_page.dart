@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym_log/features/workout_logs/widgets/workout_adder.dart';
 import 'package:gym_log/features/workout_logs/widgets/workout_logs_header.dart';
+import 'package:gym_log/services/database_service.dart';
 
 class WorkoutLogsPage extends StatefulWidget {
   const WorkoutLogsPage({super.key});
@@ -13,6 +14,8 @@ class _WorkoutLogsPageState extends State<WorkoutLogsPage> {
 
   List<WorkoutAdder> workouts = [];
   
+  final DatabaseService _databaseService = DatabaseService.instance;
+
   @override
   Widget build(BuildContext context) {
     final WIDTH = MediaQuery.of(context).size.width;
