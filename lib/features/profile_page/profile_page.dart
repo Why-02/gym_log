@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ProfilePage extends StatefulWidget {
-
   const ProfilePage({super.key});
 
   @override
@@ -13,13 +12,13 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final String imagePath = "";
-  
-  String nameText = "No username";
-  String birthdayText = "Birthday";
+
+  String nameText = "Snowi";
+  String birthdayText = "3/13/2024";
   String ageText = "Age";
-  String heightText = "Height";
-  String weightText = "Weight";
-  String targetWeightText = "Target Weight";
+  String heightText = "10 cm";
+  String weightText = "4.4 Kg";
+  String targetWeightText = "4.6 Kg";
 
   String nameTextTemp = "No username";
   String birthdayTextTemp = "Birthday";
@@ -41,124 +40,23 @@ class _ProfilePageState extends State<ProfilePage> {
   final String targetWeightIcon = "icons/target_weight_icon.png";
   final double spacing = 10.0;
   DateTime selectedDate = DateTime(2000, 01, 01);
-  TextEditingController usernameControllerTemp = TextEditingController();
-  TextEditingController birthdayControllerTemp = TextEditingController();
-  TextEditingController heightControllerTemp = TextEditingController();
-  TextEditingController weightControllerTemp = TextEditingController();
-  TextEditingController targetWeightControllerTemp = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController birthdayController = TextEditingController();
-  TextEditingController heightController = TextEditingController();
-  TextEditingController weightController = TextEditingController();
-  TextEditingController targetWeightController = TextEditingController();
-
-@override
-  void dispose() {
-    super.dispose();
-    usernameController.dispose();
-    birthdayController.dispose();
-    heightController.dispose();
-    weightController.dispose();
-    targetWeightController.dispose();
-    usernameControllerTemp.dispose();
-    birthdayControllerTemp.dispose();
-    heightControllerTemp.dispose();
-    weightControllerTemp.dispose();
-    targetWeightControllerTemp.dispose();
-  }
-@override
-  void initState() {
-    super.initState();
-    usernameControllerTemp.addListener((){
-      setState(() {
-        nameTextTemp = usernameControllerTemp.text;
-      }
-      );
-    }
-    );
-    birthdayControllerTemp.addListener((){
-      setState(() {
-        birthdayTextTemp = birthdayControllerTemp.text;
-      }
-      );
-    }
-    );
-    heightControllerTemp.addListener((){
-      setState(() {
-        heightTextTemp = heightControllerTemp.text;
-      }
-      );
-    }
-    );
-    weightControllerTemp.addListener((){
-      setState(() {
-        weightTextTemp = weightControllerTemp.text;
-      }
-      );
-    }
-    );
-    targetWeightControllerTemp.addListener((){
-      setState(() {
-        targetWeightTextTemp = targetWeightControllerTemp.text;
-      }
-      );
-    }
-    );
-    usernameController.addListener((){
-      setState(() {
-        nameText = usernameController.text;
-      }
-      );
-    }
-    );
-    birthdayController.addListener((){
-      setState(() {
-        birthdayText = birthdayController.text;
-      }
-      );
-    }
-    );
-    heightController.addListener((){
-      setState(() {
-        heightText = heightController.text;
-      }
-      );
-    }
-    );
-    weightController.addListener((){
-      setState(() {
-        weightText = weightController.text;
-      }
-      );
-    }
-    );
-    targetWeightController.addListener((){
-      setState(() {
-        targetWeightText = targetWeightController.text;
-      }
-      );
-    }
-    );
-  }
 
   String age(DateTime today, DateTime birthdayDate) {
     final year = today.year - birthdayDate.year;
     final mth = today.month - birthdayDate.month;
     final days = today.day - birthdayDate.day;
-    birthdayText = "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
-    if(mth < 0){
-      return "${year-1}";
-    }
-    else {
-      if(days < 0){
-        return "${year-1}";
-      }
-      else {
+    //birthdayText = "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+    if (mth < 0) {
+      return "${year - 1}";
+    } else {
+      if (days < 0) {
+        return "${year - 1}";
+      } else {
         return "$year";
       }
     }
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -183,203 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
           nameText,
           style: TextStyle(color: textColor, fontSize: nameFont),
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              nameTextTemp = nameText;
-              birthdayTextTemp = birthdayText;
-              heightTextTemp = heightText;
-              weightTextTemp = weightText;
-              targetWeightTextTemp = targetWeightText;
-
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    backgroundColor: backgroundColor,
-                    insetPadding: EdgeInsets.symmetric(vertical: 100),
-                    content: Center(
-                      child: Padding(
-                        padding: EdgeInsetsGeometry.directional(top: 20.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              "Modify your profile information",
-                              style: TextStyle(
-                                fontSize: textFont,
-                                color: textColor,
-                              ),
-                            ),
-                            SizedBox(height: 20,),
-                            Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Text(
-                                "Username",
-                                style: TextStyle(
-                                  fontSize: textFont-8,
-                                  height: (textFont-8)/textFont,
-                                ),
-                              ),
-                            ),
-                            TextField(
-                              style: TextStyle(
-                                fontSize: textFont-4,
-                              ),
-                              controller: usernameControllerTemp,
-                              decoration: InputDecoration(
-                                hintText: "Update your username",
-                              ),
-                            ),
-                            SizedBox(height: 20,),
-                            Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Text(
-                                "Birthday",
-                                style: TextStyle(
-                                  fontSize: textFont-8,
-                                  height: (textFont-8)/textFont,
-                                ),
-                              ),
-                            ),
-                            TextField(
-                              readOnly: true,
-                              controller: birthdayControllerTemp,
-                              style: TextStyle(
-                                fontSize: textFont-4,
-                              ),
-                              onTap: () async {
-                                DateTime? date = await showDatePicker(
-                                  context: context, 
-                                  firstDate: DateTime(1900), 
-                                  lastDate: DateTime(2030),
-                                  currentDate: selectedDate,  
-                                );
-                                if (date != null)
-                                {
-                                  setState(() {
-                                    selectedDate = date;
-                                    birthdayTextTemp="${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
-                                  },
-                                  );
-                                }
-                              },
-                              decoration: InputDecoration(
-                                hintText: birthdayTextTemp,
-                              ),
-                            ),
-                            SizedBox(height: 20,),
-                            Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Text(
-                                "Height",
-                                style: TextStyle(
-                                  fontSize: textFont-8,
-                                  height: (textFont-8)/textFont,
-                                ),
-                              ),
-                            ),
-                            TextField(
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
-                                SinglePeriodEnforcer(),
-                              ],
-                              keyboardType: TextInputType.numberWithOptions(),
-                              controller: heightControllerTemp,
-                              decoration: InputDecoration(
-                                hintText: "Update your height",
-                              ),
-                            ),
-                            SizedBox(height: 20,),
-                            Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Text(
-                                "Weight",
-                                style: TextStyle(
-                                  fontSize: textFont-8,
-                                  height: (textFont-8)/textFont,
-                                ),
-                              ),
-                            ),
-                            TextFormField(
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
-                                SinglePeriodEnforcer(),
-                              ],
-                              keyboardType: TextInputType.numberWithOptions(),
-                              controller: weightControllerTemp,
-                              decoration: InputDecoration(
-                                hintText: "Update your weight",
-                              ),
-                            ),
-                            SizedBox(height: 20,),
-                            Align(
-                              alignment: Alignment.bottomLeft,
-                              child: Text(
-                                "Target Weight",
-                                style: TextStyle(
-                                  fontSize: textFont-8,
-                                  height: (textFont-8)/textFont,
-                                ),
-                              ),
-                            ),
-                            TextFormField(
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
-                                SinglePeriodEnforcer(),
-                              ],
-                              keyboardType: TextInputType.numberWithOptions(),
-                              controller: targetWeightControllerTemp,
-                              decoration: InputDecoration(
-                                hintText: "Update your target weight",
-                              ),
-                            ),
-                            SizedBox(height: 30,),
-                            Row(
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  }, 
-                                  child: Text(
-                                    "Close"
-                                  )
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    nameText = nameTextTemp;
-                                    birthdayText = birthdayTextTemp;
-                                    heightText = heightTextTemp;
-                                    weightText = weightTextTemp;
-                                    targetWeightText = targetWeightTextTemp;
-                                    //Navigator.pop(context);
-                                    Navigator.push(context, route)
-                                  }, 
-                                  child: Text(
-                                    "Save"
-                                  )
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(1),
-              child: Image.asset(
-                editIcon,
-                width: 66 / 1.5,
-                height: 40 / 1.5,
-                fit: BoxFit.fill,
-                color: textColor,
-              ),
-            ),
-          ),
-        ],
+        actions: [handleEditButton(context)],
       ),
       body: Center(
         child: Row(
@@ -404,13 +106,14 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 TextInfo(
                   textColor: textColor,
-                  text: "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}",
+                  text:
+                      "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}",
                   textFont: textFont,
                 ),
                 SizedBox(height: spacing),
                 TextInfo(
                   textColor: textColor,
-                  text: age(DateTime.now(),selectedDate),
+                  text: age(DateTime.now(), selectedDate),
                   textFont: textFont,
                 ),
                 SizedBox(height: spacing),
@@ -437,6 +140,192 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
     );
+  }
+
+  TextButton handleEditButton(BuildContext context) {
+    return TextButton(
+      onPressed: handleEditButtonPressed,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(1),
+        child: Image.asset(
+          editIcon,
+          width: 66 / 1.5,
+          height: 40 / 1.5,
+          fit: BoxFit.fill,
+          color: textColor,
+        ),
+      ),
+    );
+  }
+
+  void handleEditButtonPressed() async {
+    TextEditingController userNameController = TextEditingController(text: nameText,);
+    TextEditingController birthdayController = TextEditingController(text: birthdayText,);
+    TextEditingController heightController = TextEditingController(text: heightText,);
+    TextEditingController weightController = TextEditingController(text: weightText,);
+    TextEditingController targetWeightController = TextEditingController(text: targetWeightText,);
+    
+    final List<String>? extractedData = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: backgroundColor,
+          insetPadding: EdgeInsets.symmetric(vertical: 100),
+          content: Center(
+            child: Padding(
+              padding: EdgeInsetsGeometry.directional(top: 20.0),
+              child: Column(
+                children: [
+                  Text(
+                    "Modify your profile information",
+                    style: TextStyle(fontSize: textFont, color: textColor),
+                  ),
+                  SizedBox(height: 20),
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      "Username",
+                      style: TextStyle(
+                        fontSize: textFont - 8,
+                        height: (textFont - 8) / textFont,
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    style: TextStyle(fontSize: textFont - 4),
+                    controller: userNameController,
+                    decoration: InputDecoration(
+                      hintText: "Update your username",
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      "Birthday",
+                      style: TextStyle(
+                        fontSize: textFont - 8,
+                        height: (textFont - 8) / textFont,
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    readOnly: true,
+                    controller: birthdayController,
+                    style: TextStyle(fontSize: textFont - 4),
+                    onTap: () async {
+                      DateTime? date = await showDatePicker(
+                        locale: const Locale('en', 'CH'),
+                        context: context,
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime(2030),
+                        currentDate: selectedDate,
+                      );
+                      if (date != null) {
+                        setState(() {
+                          selectedDate = date;
+                          birthdayTextTemp =
+                              "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+                        });
+                      }
+                    },
+                    decoration: InputDecoration(hintText: birthdayTextTemp),
+                  ),
+                  SizedBox(height: 20),
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      "Height",
+                      style: TextStyle(
+                        fontSize: textFont - 8,
+                        height: (textFont - 8) / textFont,
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
+                      SinglePeriodEnforcer(),
+                    ],
+                    keyboardType: TextInputType.numberWithOptions(),
+                    controller: heightController,
+                    decoration: InputDecoration(hintText: "Update your height"),
+                  ),
+                  SizedBox(height: 20),
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      "Weight",
+                      style: TextStyle(
+                        fontSize: textFont - 8,
+                        height: (textFont - 8) / textFont,
+                      ),
+                    ),
+                  ),
+                  TextFormField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
+                      SinglePeriodEnforcer(),
+                    ],
+                    keyboardType: TextInputType.numberWithOptions(),
+                    controller: weightController,
+                    decoration: InputDecoration(hintText: "Update your weight"),
+                  ),
+                  SizedBox(height: 20),
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      "Target Weight",
+                      style: TextStyle(
+                        fontSize: textFont - 8,
+                        height: (textFont - 8) / textFont,
+                      ),
+                    ),
+                  ),
+                  TextFormField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
+                      SinglePeriodEnforcer(),
+                    ],
+                    keyboardType: TextInputType.numberWithOptions(),
+                    controller: targetWeightController,
+                    decoration: InputDecoration(
+                      hintText: "Update your target weight",
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("Close"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context, {userNameController.text, birthdayController.text, heightController.text, weightController.text, targetWeightController.text});
+                        },
+                        child: Text("Save"),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+    if (extractedData != null){
+      setState(() {
+        nameText = extractedData[0];
+        birthdayText = extractedData[1];
+        heightText = extractedData[2];
+        weightText = extractedData[3];
+        targetWeightText = extractedData[4];
+      });
+    }
   }
 }
 
