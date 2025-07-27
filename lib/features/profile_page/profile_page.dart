@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ProfilePage extends StatefulWidget {
 
@@ -12,20 +13,26 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final String imagePath = "";
-  final String nameText = "No username";
-  final double nameFont = 26;
-  final double width = 412;
-  final double height = 915;
-  final Color appBarBackgroundColor = Colors.black;
-  final Color appBarTextColor = Colors.white;
-  final Color backgroundColor = Colors.white;
-  final Color textColor = Colors.black;
-  final double textFont = 20;
+  
+  String nameText = "No username";
   String birthdayText = "Birthday";
   String ageText = "Age";
   String heightText = "Height";
   String weightText = "Weight";
   String targetWeightText = "Target Weight";
+
+  String nameTextTemp = "No username";
+  String birthdayTextTemp = "Birthday";
+  String heightTextTemp = "Height";
+  String weightTextTemp = "Weight";
+  String targetWeightTextTemp = "Target Weight";
+
+  final double nameFont = 26;
+  final double width = 412;
+  final double height = 915;
+  final Color backgroundColor = Colors.white;
+  final Color textColor = Colors.black;
+  final double textFont = 20;
   final String editIcon = "icons/edit_icon.png";
   final String birthdayIcon = "icons/birthday_icon.png";
   final String ageIcon = "icons/age_icon.png";
@@ -33,7 +40,13 @@ class _ProfilePageState extends State<ProfilePage> {
   final String weightIcon = "icons/weight_icon.png";
   final String targetWeightIcon = "icons/target_weight_icon.png";
   final double spacing = 10.0;
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime(2000, 01, 01);
+  TextEditingController usernameControllerTemp = TextEditingController();
+  TextEditingController birthdayControllerTemp = TextEditingController();
+  TextEditingController heightControllerTemp = TextEditingController();
+  TextEditingController weightControllerTemp = TextEditingController();
+  TextEditingController targetWeightControllerTemp = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
   TextEditingController birthdayController = TextEditingController();
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
@@ -42,17 +55,108 @@ class _ProfilePageState extends State<ProfilePage> {
 @override
   void dispose() {
     super.dispose();
+    usernameController.dispose();
     birthdayController.dispose();
     heightController.dispose();
     weightController.dispose();
     targetWeightController.dispose();
+    usernameControllerTemp.dispose();
+    birthdayControllerTemp.dispose();
+    heightControllerTemp.dispose();
+    weightControllerTemp.dispose();
+    targetWeightControllerTemp.dispose();
   }
 @override
   void initState() {
     super.initState();
-    setState(() {
-      heightText = heightController.text;
-    });
+    usernameControllerTemp.addListener((){
+      setState(() {
+        nameTextTemp = usernameControllerTemp.text;
+      }
+      );
+    }
+    );
+    birthdayControllerTemp.addListener((){
+      setState(() {
+        birthdayTextTemp = birthdayControllerTemp.text;
+      }
+      );
+    }
+    );
+    heightControllerTemp.addListener((){
+      setState(() {
+        heightTextTemp = heightControllerTemp.text;
+      }
+      );
+    }
+    );
+    weightControllerTemp.addListener((){
+      setState(() {
+        weightTextTemp = weightControllerTemp.text;
+      }
+      );
+    }
+    );
+    targetWeightControllerTemp.addListener((){
+      setState(() {
+        targetWeightTextTemp = targetWeightControllerTemp.text;
+      }
+      );
+    }
+    );
+    usernameController.addListener((){
+      setState(() {
+        nameText = usernameController.text;
+      }
+      );
+    }
+    );
+    birthdayController.addListener((){
+      setState(() {
+        birthdayText = birthdayController.text;
+      }
+      );
+    }
+    );
+    heightController.addListener((){
+      setState(() {
+        heightText = heightController.text;
+      }
+      );
+    }
+    );
+    weightController.addListener((){
+      setState(() {
+        weightText = weightController.text;
+      }
+      );
+    }
+    );
+    targetWeightController.addListener((){
+      setState(() {
+        targetWeightText = targetWeightController.text;
+      }
+      );
+    }
+    );
+  }
+
+  String age(DateTime today, DateTime birthdayDate) {
+    final year = today.year - birthdayDate.year;
+    final mth = today.month - birthdayDate.month;
+    final days = today.day - birthdayDate.day;
+    birthdayText = "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+    if(mth < 0){
+      return "${year-1}";
+    }
+    else {
+      if(days < 0){
+        return "${year-1}";
+      }
+      else {
+        return "$year";
+      }
+    }
   }
 
   @override
@@ -60,8 +164,10 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: appBarBackgroundColor,
+        backgroundColor: backgroundColor,
         toolbarHeight: height / 6,
+        elevation: 20.0,
+        shadowColor: textColor,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: CircleAvatar(
@@ -75,11 +181,17 @@ class _ProfilePageState extends State<ProfilePage> {
         leadingWidth: width / 3,
         title: Text(
           nameText,
-          style: TextStyle(color: appBarTextColor, fontSize: nameFont),
+          style: TextStyle(color: textColor, fontSize: nameFont),
         ),
         actions: [
           TextButton(
             onPressed: () {
+              nameTextTemp = nameText;
+              birthdayTextTemp = birthdayText;
+              heightTextTemp = heightText;
+              weightTextTemp = weightText;
+              targetWeightTextTemp = targetWeightText;
+
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -98,12 +210,44 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: textColor,
                               ),
                             ),
-                            ElevatedButton(
-                              style:ButtonStyle(
-                                elevation: WidgetStatePropertyAll(0),
-                                alignment: Alignment.centerLeft,
+                            SizedBox(height: 20,),
+                            Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Text(
+                                "Username",
+                                style: TextStyle(
+                                  fontSize: textFont-8,
+                                  height: (textFont-8)/textFont,
+                                ),
                               ),
-                              onPressed: () async {
+                            ),
+                            TextField(
+                              style: TextStyle(
+                                fontSize: textFont-4,
+                              ),
+                              controller: usernameControllerTemp,
+                              decoration: InputDecoration(
+                                hintText: "Update your username",
+                              ),
+                            ),
+                            SizedBox(height: 20,),
+                            Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Text(
+                                "Birthday",
+                                style: TextStyle(
+                                  fontSize: textFont-8,
+                                  height: (textFont-8)/textFont,
+                                ),
+                              ),
+                            ),
+                            TextField(
+                              readOnly: true,
+                              controller: birthdayControllerTemp,
+                              style: TextStyle(
+                                fontSize: textFont-4,
+                              ),
+                              onTap: () async {
                                 DateTime? date = await showDatePicker(
                                   context: context, 
                                   firstDate: DateTime(1900), 
@@ -114,33 +258,108 @@ class _ProfilePageState extends State<ProfilePage> {
                                 {
                                   setState(() {
                                     selectedDate = date;
+                                    birthdayTextTemp="${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
                                   },
                                   );
                                 }
-                              }, 
-                              child: Text("$selectedDate"),
+                              },
+                              decoration: InputDecoration(
+                                hintText: birthdayTextTemp,
+                              ),
+                            ),
+                            SizedBox(height: 20,),
+                            Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Text(
+                                "Height",
+                                style: TextStyle(
+                                  fontSize: textFont-8,
+                                  height: (textFont-8)/textFont,
+                                ),
+                              ),
                             ),
                             TextField(
-                              controller: heightController,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
+                                SinglePeriodEnforcer(),
+                              ],
+                              keyboardType: TextInputType.numberWithOptions(),
+                              controller: heightControllerTemp,
                               decoration: InputDecoration(
-                                labelText: "Height",
                                 hintText: "Update your height",
                               ),
                             ),
+                            SizedBox(height: 20,),
+                            Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Text(
+                                "Weight",
+                                style: TextStyle(
+                                  fontSize: textFont-8,
+                                  height: (textFont-8)/textFont,
+                                ),
+                              ),
+                            ),
                             TextFormField(
-                              controller: weightController,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
+                                SinglePeriodEnforcer(),
+                              ],
+                              keyboardType: TextInputType.numberWithOptions(),
+                              controller: weightControllerTemp,
                               decoration: InputDecoration(
-                                labelText: "Weight",
                                 hintText: "Update your weight",
                               ),
                             ),
+                            SizedBox(height: 20,),
+                            Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Text(
+                                "Target Weight",
+                                style: TextStyle(
+                                  fontSize: textFont-8,
+                                  height: (textFont-8)/textFont,
+                                ),
+                              ),
+                            ),
                             TextFormField(
-                              controller: targetWeightController,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
+                                SinglePeriodEnforcer(),
+                              ],
+                              keyboardType: TextInputType.numberWithOptions(),
+                              controller: targetWeightControllerTemp,
                               decoration: InputDecoration(
-                                labelText: "Target weight",
                                 hintText: "Update your target weight",
                               ),
                             ),
+                            SizedBox(height: 30,),
+                            Row(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  }, 
+                                  child: Text(
+                                    "Close"
+                                  )
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    nameText = nameTextTemp;
+                                    birthdayText = birthdayTextTemp;
+                                    heightText = heightTextTemp;
+                                    weightText = weightTextTemp;
+                                    targetWeightText = targetWeightTextTemp;
+                                    //Navigator.pop(context);
+                                    Navigator.push(context, route)
+                                  }, 
+                                  child: Text(
+                                    "Save"
+                                  )
+                                ),
+                              ],
+                            )
                           ],
                         ),
                       ),
@@ -156,7 +375,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 width: 66 / 1.5,
                 height: 40 / 1.5,
                 fit: BoxFit.fill,
-                color: appBarTextColor,
+                color: textColor,
               ),
             ),
           ),
@@ -185,13 +404,13 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 TextInfo(
                   textColor: textColor,
-                  text: birthdayText,
+                  text: "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}",
                   textFont: textFont,
                 ),
                 SizedBox(height: spacing),
                 TextInfo(
                   textColor: textColor,
-                  text: ageText,
+                  text: age(DateTime.now(),selectedDate),
                   textFont: textFont,
                 ),
                 SizedBox(height: spacing),
@@ -218,6 +437,21 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
     );
+  }
+}
+
+class SinglePeriodEnforcer extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final newText = newValue.text;
+    // Allow only one period
+    if ('.'.allMatches(newText).length <= 1) {
+      return newValue;
+    }
+    return oldValue;
   }
 }
 
