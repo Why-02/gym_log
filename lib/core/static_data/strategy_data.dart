@@ -132,18 +132,55 @@ Map<String, String> timeUnderTensionDict = {
 
 Map<String, String> contrastTrainingDict = {
   "idea": '''
-  
-  '''
+  - A popular technique for advanced lifters and athletes
+  - Involves pairing two exercises:
+    - One heavy strength movement (e.g. squat, bench press)
+    - One explosive movement targeting the same muscle group (e.g. jump squat, plyometric push-up)
+  - The goal is to prepare your nervous system for explosiveness with the heavy exercise, then unleash it with the explosive movement
+  - This trains your muscles to become more responsive and powerful following a near-maximal effort, a phenomenon known as Post-Activation Potentiation (PAP)
+  ''',
 };
 
 Map<String, String> dropSetsDict = {
   "idea": '''
-  
+  - flow :
+    - performing an exercice until you reach muscle failure
+    - then immediately reducing the weight and continuing with more reps without resting
+    - you repeat the process many times, each time reducing the weight and going till failure
+  - allows to do more work in less time
+  - ideal for breaking plateus
+  - should be limited to 1 or 2 times per week to avoid overtraining and injury
+  ''',
+
+  "example": '''
+  The following are all done back-to-back, until failure, no rest between sets:
+  - Curl 20 kg dumbbells for 6 to 8 reps 
+  - Drop to 15 kg → do 10 to 12 reps
+  - Drop to 12 kg → do 12 to 15 reps 
+  ''',
+
+  "tips": '''
+  - prepare your weights ahead of time to minimize rest time in the drop set
+  - keep focus on your form even when fatigued
+  - avoid using drop sets on complicated or dangerous exercices (if you can get crushed, for example)
   '''
 };
 
 Map<String, String> supersetsDict = {
   "idea": '''
-  
-  '''
+  - perform two exercices back to back with little to no rest between them
+  - this allows for better time-efficiency, while building endurance and muscle strength
+  ''',
+
+  "Agonistic Supersets": '''
+  A subtype of supersets where both exercices are focused on same muscle group.
+
+  Ex: Bench Press + Dumbell Fly (chest)
+  ''',
+
+  "Antagonistic Supersets": '''
+  A subtype of supersets where the two exercices focus on opposing muscle groups
+
+  Ex: Biceps Curls + Triceps Extension
+  ''',
 };

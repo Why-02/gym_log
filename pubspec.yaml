@@ -66,6 +66,9 @@ flutter:
     - assets/images/deload_img.jpg
     - assets/images/mind_muscle_connection_img.jpg
     - assets/images/time_under_tension_img.jpg
+    - assets/images/contrast_training_img.jpg
+    - assets/images/drop_sets_img.jpg
+    - assets/images/supersets_img.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

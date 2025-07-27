@@ -7,4 +7,7 @@ class AppRoutes {
   static String deloadPath = '/strategies/deload';
   static String mindMuscleConnectionPath = '/strategies/mind_muscle_connection';
   static String timeUnderTensionPath = '/strategies/time_under_tension';
+  static String contrastTrainingPath = '/strategies/contrast_training';
+  static String dropSetsPath = '/strategies/drop_sets';
+  static String supersetsPath = '/strategies/supersets';
 }
