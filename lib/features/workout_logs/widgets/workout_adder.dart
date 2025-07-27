@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym_log/core/ui/widgets/styled_text_field.dart';
 import 'package:gym_log/features/workout_logs/widgets/utils.dart';
+import 'package:gym_log/services/database_service.dart';
 
 class WorkoutAdder extends StatefulWidget {
   const WorkoutAdder({super.key});
@@ -15,6 +16,7 @@ class _WorkoutAdderState extends State<WorkoutAdder> {
   bool locked = false;
   bool show = true;
   List<(TextEditingController,TextEditingController)> sets = [];
+  final DatabaseService _databaseService = DatabaseService.instance;
 
   @override
   void initState() {
@@ -86,16 +88,16 @@ class _WorkoutAdderState extends State<WorkoutAdder> {
               ]
             ),
             DropdownButton(value: _selectedWorkout,items: standardWorkouts.map<DropdownMenuItem<String>>((String workout){
-                          return DropdownMenuItem(
-            value: workout,
-            child: Text(workout));
-                          }).toList(), 
-                          onChanged: ((customWorkoutText == ""  && !locked) ? (String? newWorlout){
-            setState(() {
-              _selectedWorkout = newWorlout;
-            });
-                        } : null)),
-            ElevatedButton(onPressed: (){for (int i = 0; i<sets.length; i++){debugPrint(sets[i].$1.text);}}, child: Center(
+              return DropdownMenuItem(
+                value: workout,
+                child: Text(workout));
+                            }).toList(), 
+              onChanged: ((customWorkoutText == ""  && !locked) ? (String? newWorkout){
+                setState(() {
+                  _selectedWorkout = newWorkout;
+                });
+                            } : null)),
+            ElevatedButton(onPressed: (){_databaseService.addWorkout(_selectedWorkout!, [for(int i = 0; i<sets.length; i++) int.parse(sets[i].$1.text) ], [for(int i = 0; i<sets.length; i++) int.parse(sets[i].$2.text) ]);show = false;}, child: Center(
               child: Text("Add Workout"),
             ))
           ],
