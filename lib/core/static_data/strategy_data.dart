@@ -184,3 +184,4 @@ Map<String, String> supersetsDict = {
   Ex: Biceps Curls + Triceps Extension
   ''',
 };
+

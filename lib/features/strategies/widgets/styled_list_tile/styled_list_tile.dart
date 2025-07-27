@@ -14,13 +14,16 @@ class StyledListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      child: ListTile(
-        minTileHeight: 80,
-        title: Text(tileName, style: TextStyle(fontSize: 24, fontWeight: FontWeight.w400),),
-        leading: Icon(Icons.add, size: 24, color: Colors.deepPurple),
-        tileColor: Colors.grey[200],
-        textColor: Colors.deepPurple,
-        onTap: onTap,
+      child: Card(
+        child: ListTile(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16), // Adjust the radius as needed
+            ),
+            minTileHeight: 80,
+            title: Text(tileName, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+            textColor: Colors.deepPurple,
+            onTap: onTap,
+          ),
       ),
     );
   }

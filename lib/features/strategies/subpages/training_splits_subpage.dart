@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gym_log/core/app_routes.dart';
 import 'package:gym_log/core/static_data/strategy_data.dart' as strategy_data;
 import 'package:gym_log/features/strategies/widgets/styled_list_tile/styled_list_tile.dart';
 
@@ -11,14 +12,23 @@ class TrainingSplitsSubpage extends StatelessWidget{
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: const Text('Strategies', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold))),
+        title: Text("Training Splits", style: TextStyle(fontWeight: FontWeight.bold),),
       ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 16.0),
           child: ListView.builder(
             itemCount: trainingSplitsList.length,
-            itemBuilder: (context, index) => StyledListTile(tileName: trainingSplitsList[index])
+            itemBuilder: (context, index) => StyledListTile(
+              tileName: trainingSplitsList[index],
+              onTap: (){
+                switch(index){
+                  case 0 : Navigator.of(context).pushNamed(AppRoutes.fullBodyPath);
+                  case 1 : Navigator.of(context).pushNamed(AppRoutes.upperLowerPath);
+                  case _ : debugPrint("index $index does not have a route yet");
+                }
+              },
+            )
           )
         )
       )
