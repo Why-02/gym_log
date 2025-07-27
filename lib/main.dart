@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym_log/core/app_routes.dart';
 import 'package:gym_log/core/ui/pages/tab_scaffold.dart';
+import 'package:gym_log/features/profile/profile_page.dart';
 import 'package:gym_log/features/strategies/strategies_page.dart';
 import 'package:gym_log/features/strategies/subpages/body_part_sub_subpage.dart';
 import 'package:gym_log/features/strategies/subpages/contrast_training_subpage.dart';
@@ -34,12 +35,12 @@ class MyApp extends StatelessWidget {
       initialRoute: AppRoutes.tabPath,
       routes: {
         AppRoutes.tabPath : (context) => TabScaffold(tabs: [
-              WorkoutLogsPage(),
-              Placeholder(),
-              StrategiesPage(),
-              Placeholder()
-            ]
-          ),
+            WorkoutLogsPage(),
+            Placeholder(),
+            StrategiesPage(),
+            ProfilePage()
+          ]
+        ),
         
         // Strategies Routes
         AppRoutes.trainingSplitsPath : (context) => TrainingSplitsSubpage(),
