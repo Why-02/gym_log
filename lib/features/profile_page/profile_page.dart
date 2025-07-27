@@ -165,7 +165,7 @@ class _ProfilePageState extends State<ProfilePage> {
     TextEditingController weightController = TextEditingController(text: weightText,);
     TextEditingController targetWeightController = TextEditingController(text: targetWeightText,);
     
-    final List<String>? extractedData = await showDialog(
+    final Map<String, dynamic>? extractedData = await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -304,7 +304,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pop(context, {userNameController.text, birthdayController.text, heightController.text, weightController.text, targetWeightController.text});
+                          Map<String, String> extractedData = {"username" : userNameController.text, "birthday" : birthdayController.text, "height" : heightController.text, "weight" : weightController.text, "target weight" : targetWeightController.text};
+                          Navigator.pop(context, extractedData);
                         },
                         child: Text("Save"),
                       ),
@@ -319,11 +320,11 @@ class _ProfilePageState extends State<ProfilePage> {
     );
     if (extractedData != null){
       setState(() {
-        nameText = extractedData[0];
-        birthdayText = extractedData[1];
-        heightText = extractedData[2];
-        weightText = extractedData[3];
-        targetWeightText = extractedData[4];
+        nameText = extractedData["username"];
+        birthdayText = extractedData["birthday"];
+        heightText = extractedData["height"];
+        weightText = extractedData["weight"];
+        targetWeightText = extractedData["target weight"];
       });
     }
   }
