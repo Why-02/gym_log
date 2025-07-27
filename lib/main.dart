@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gym_log/core/app_routes.dart';
 import 'package:gym_log/core/ui/pages/tab_scaffold.dart';
 import 'package:gym_log/features/strategies/strategies_page.dart';
+import 'package:gym_log/features/strategies/subpages/body_part_sub_subpage.dart';
 import 'package:gym_log/features/strategies/subpages/contrast_training_subpage.dart';
 import 'package:gym_log/features/strategies/subpages/deload_subpage.dart';
 import 'package:gym_log/features/strategies/subpages/drop_sets_subpage.dart';
 import 'package:gym_log/features/strategies/subpages/full_body_sub_subpage.dart';
 import 'package:gym_log/features/strategies/subpages/mind_muscle_connection_subpage.dart';
 import 'package:gym_log/features/strategies/subpages/progressive_overload_subpage.dart';
+import 'package:gym_log/features/strategies/subpages/push_pull_legs_sub_subpage.dart';
 import 'package:gym_log/features/strategies/subpages/supersets_subpage.dart';
 import 'package:gym_log/features/strategies/subpages/time_under_tension_subpage.dart';
 import 'package:gym_log/features/strategies/subpages/training_splits_subpage.dart';
@@ -51,7 +53,9 @@ class MyApp extends StatelessWidget {
 
         // Strategies/Training_Splits Routes
         AppRoutes.fullBodyPath : (context) => FullBodySubSubpage(),
-        AppRoutes.upperLowerPath : (context) => UpperLowerSubSubpage()
+        AppRoutes.upperLowerPath : (context) => UpperLowerSubSubpage(),
+        AppRoutes.pushPullLegsPath : (context) => PushPullLegsSubSubpage(),
+        AppRoutes.bodyPartPath : (context) => BodyPartSubSubpage(),
       },
     );
   }

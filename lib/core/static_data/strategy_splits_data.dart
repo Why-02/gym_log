@@ -57,11 +57,54 @@ Map<String, String> upperLowerDict = {
 
 Map<String, String> pushPullLegsDict = {
   "idea": '''
+  - Also known as PPL
+  - divides your workouts based on movement patterns and muscle function, making it easy to organize, recover, and progress
+  - usually 3 or 6 days a week
   ''',
+
+  "Push day":'''
+  Targets muscles used in pushing movements:
+  - Chest
+  - Shoulders
+  - Triceps
+  ''',
+
+  "Pull day":'''
+  Targets muscles used in pulling movements:
+  - Back
+  - Biceps
+  - Rear Deltoids
+  ''',
+
+  "Legs day": '''
+  Focus on muscle groups in the lower body:
+  - Core
+  - Quads
+  - Hamstrings
+  - Glutes
+  - Calves
+  '''
 };
 
 Map<String, String> bodyPartDict = {
   "idea": '''
-
+  - also known as Bro-Split
+  - train chest, back, legs, shoulders, arms each on a separate day
+  - helps you target specific areas more effectively 
+  - allows recovery time between sessions
+  - requires 5 to 6 days a week
+  - excellent for muscle growth
   ''',
+
+  "Common Example": '''
+  | Day | Type |
+  | --- | ---- |
+  | Monday | Chest |
+  | Tuesday | Back |
+  | Wednesday | Shoulders |
+  | Thursday | Arms |
+  | Friday | Legs |
+  | Saturday | Core or Cardio |
+  | Sunday | Rest |
+  '''
 };

@@ -11,8 +11,8 @@ List<String> strategyList = [
 
 List<String> trainingSplitsList = [
   "Full Body",
-  "Upper/Lower",
-  "Push/Pull/Legs",
+  "Upper-Lower",
+  "Push-Pull-Legs",
   "Body Part",
 ];
 

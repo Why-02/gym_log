@@ -25,6 +25,8 @@ class TrainingSplitsSubpage extends StatelessWidget{
                 switch(index){
                   case 0 : Navigator.of(context).pushNamed(AppRoutes.fullBodyPath);
                   case 1 : Navigator.of(context).pushNamed(AppRoutes.upperLowerPath);
+                  case 2 : Navigator.of(context).pushNamed(AppRoutes.pushPullLegsPath);
+                  case 3 : Navigator.of(context).pushNamed(AppRoutes.bodyPartPath);
                   case _ : debugPrint("index $index does not have a route yet");
                 }
               },
