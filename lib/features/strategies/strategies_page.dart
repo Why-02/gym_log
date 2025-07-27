@@ -27,6 +27,10 @@ class StrategiesPage extends StatelessWidget {
                   case 1 : Navigator.of(context).pushNamed(AppRoutes.progressiveOverloadPath);
                   case 2 : Navigator.of(context).pushNamed(AppRoutes.deloadPath);
                   case 3 : Navigator.of(context).pushNamed(AppRoutes.mindMuscleConnectionPath);
+                  case 4 : Navigator.of(context).pushNamed(AppRoutes.timeUnderTensionPath);
+                  case 5 : Navigator.of(context).pushNamed(AppRoutes.contrastTrainingPath);
+                  case 6 : Navigator.of(context).pushNamed(AppRoutes.dropSetsPath);
+                  case 7 : Navigator.of(context).pushNamed(AppRoutes.supersetsPath);
                   case _ : debugPrint("index $index does not have a route yet");
                 }
               },
