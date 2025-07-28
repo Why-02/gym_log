@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -13,18 +15,18 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final String imagePath = "";
 
-  String nameText = "Snowi";
-  String birthdayText = "3/13/2024";
-  String ageText = "Age";
-  String heightText = "10 cm";
-  String weightText = "4.4 Kg";
-  String targetWeightText = "4.6 Kg";
+  List<String> heightList = <String>['cm', 'ft'];
+  List<String> weightList = <String>['kg', 'lb'];
 
-  String nameTextTemp = "No username";
-  String birthdayTextTemp = "Birthday";
-  String heightTextTemp = "Height";
-  String weightTextTemp = "Weight";
-  String targetWeightTextTemp = "Target Weight";
+  String nameText = "Snowi";
+  String birthdayText = "13/3/2024";
+  String ageText = "Age";
+  String heightText = "10";
+  String heightUnitText = "cm";
+  String selectedHeightUnitText = "cm";
+  String weightText = "4.4";
+  String targetWeightText = "4.6";
+  String weightUnitText = "Kg";
 
   final double nameFont = 26;
   final double width = 412;
@@ -39,13 +41,11 @@ class _ProfilePageState extends State<ProfilePage> {
   final String weightIcon = "icons/weight_icon.png";
   final String targetWeightIcon = "icons/target_weight_icon.png";
   final double spacing = 10.0;
-  DateTime selectedDate = DateTime(2000, 01, 01);
-
+  
   String age(DateTime today, DateTime birthdayDate) {
     final year = today.year - birthdayDate.year;
     final mth = today.month - birthdayDate.month;
     final days = today.day - birthdayDate.day;
-    //birthdayText = "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
     if (mth < 0) {
       return "${year - 1}";
     } else {
@@ -59,9 +59,15 @@ class _ProfilePageState extends State<ProfilePage> {
   
   @override
   Widget build(BuildContext context) {
+    DateTime parseData = DateFormat("dd/MM/yyyy").parse(birthdayText);
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(width/8),
+          )
+        ),
         backgroundColor: backgroundColor,
         toolbarHeight: height / 6,
         elevation: 20.0,
@@ -107,19 +113,19 @@ class _ProfilePageState extends State<ProfilePage> {
                 TextInfo(
                   textColor: textColor,
                   text:
-                      "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}",
+                      birthdayText,
                   textFont: textFont,
                 ),
                 SizedBox(height: spacing),
                 TextInfo(
                   textColor: textColor,
-                  text: age(DateTime.now(), selectedDate),
+                  text: age(DateTime.now(), parseData),
                   textFont: textFont,
                 ),
                 SizedBox(height: spacing),
                 TextInfo(
                   textColor: textColor,
-                  text: heightText,
+                  text: "$heightText $heightUnitText",
                   textFont: textFont,
                 ),
                 SizedBox(height: spacing),
@@ -164,7 +170,10 @@ class _ProfilePageState extends State<ProfilePage> {
     TextEditingController heightController = TextEditingController(text: heightText,);
     TextEditingController weightController = TextEditingController(text: weightText,);
     TextEditingController targetWeightController = TextEditingController(text: targetWeightText,);
-    
+    TextEditingController heightUnitController = TextEditingController(text: heightUnitText,);
+    TextEditingController weightUnitController = TextEditingController(text: weightUnitText,);
+
+
     final Map<String, dynamic>? extractedData = await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -211,25 +220,24 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   TextField(
                     readOnly: true,
+                    enableInteractiveSelection: false,
                     controller: birthdayController,
                     style: TextStyle(fontSize: textFont - 4),
                     onTap: () async {
+                      DateTime parseData = DateFormat("dd/MM/yyyy").parse(birthdayController.text);
                       DateTime? date = await showDatePicker(
-                        locale: const Locale('en', 'CH'),
+                        locale: const Locale('en', 'GB'),
                         context: context,
                         firstDate: DateTime(1900),
                         lastDate: DateTime(2030),
-                        currentDate: selectedDate,
+                        currentDate: parseData,
                       );
                       if (date != null) {
                         setState(() {
-                          selectedDate = date;
-                          birthdayTextTemp =
-                              "${selectedDate.day}/${selectedDate.month}/${selectedDate.year}";
+                          birthdayController.text = "${date.day}/${date.month}/${date.year}";
                         });
                       }
                     },
-                    decoration: InputDecoration(hintText: birthdayTextTemp),
                   ),
                   SizedBox(height: 20),
                   Align(
@@ -242,14 +250,35 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
-                  TextField(
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
-                      SinglePeriodEnforcer(),
+                  Stack(
+                    children: <Widget>[
+                      TextField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
+                          SinglePeriodEnforcer(),
+                        ],
+                        keyboardType: TextInputType.numberWithOptions(),
+                        controller: heightController,
+                        decoration: InputDecoration(
+                          hintText: "Update your height",
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: DropdownButton(
+                          value: selectedHeightUnitText,
+                          items: heightList.map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(value: value, child: Text(value));
+                          }).toList(),
+                          onChanged: (String? value) {
+                            setState(() {
+                              selectedHeightUnitText = value!;
+                              heightUnitController.text = value;
+                            });
+                          },
+                          )
+                        )
                     ],
-                    keyboardType: TextInputType.numberWithOptions(),
-                    controller: heightController,
-                    decoration: InputDecoration(hintText: "Update your height"),
                   ),
                   SizedBox(height: 20),
                   Align(
@@ -304,7 +333,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          Map<String, String> extractedData = {"username" : userNameController.text, "birthday" : birthdayController.text, "height" : heightController.text, "weight" : weightController.text, "target weight" : targetWeightController.text};
+                          Map<String, String> extractedData = {"username" : userNameController.text, "birthday" : birthdayController.text, "height" : heightController.text, "heightUnit" : heightUnitController.text,  "weight" : weightController.text, "target weight" : targetWeightController.text};
                           Navigator.pop(context, extractedData);
                         },
                         child: Text("Save"),
@@ -323,6 +352,7 @@ class _ProfilePageState extends State<ProfilePage> {
         nameText = extractedData["username"];
         birthdayText = extractedData["birthday"];
         heightText = extractedData["height"];
+        heightUnitText = extractedData["heightUnit"];
         weightText = extractedData["weight"];
         targetWeightText = extractedData["target weight"];
       });
