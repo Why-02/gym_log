@@ -24,11 +24,11 @@ class _WorkoutLogsPageState extends State<WorkoutLogsPage> {
     scrollController.jumpTo(scrollController.position.maxScrollExtent , );
   }
   
-  List<Map<String, Object?>> logs = [];
-    Future<List<Map<String, Object?>>> fetchLogs() async {
-      final values = await _databaseService.getLogs();
+  List<Map<String, dynamic>> logs = [];
+    Future<List<Map<String, dynamic>>> fetchLogs() async {
+      final values = await _databaseService.getWorkouts();
       setState(() {
-        for (Map<String,Object?> value in values) {
+        for (Map<String,dynamic> value in values) {
           setState(() {
             logs.add(value);
           });
@@ -63,7 +63,7 @@ class _WorkoutLogsPageState extends State<WorkoutLogsPage> {
         children: [
           WorkoutLogsHeader(),
           ConstrainedBox(
-            constraints: BoxConstraints(maxWidth:WIDTH,maxHeight:HEIGHT - 200 - keyboardOffset),
+            constraints: BoxConstraints(maxWidth:WIDTH,maxHeight:0.5*HEIGHT  - keyboardOffset),
             child: ListView.builder(
               dragStartBehavior: DragStartBehavior.down,
               controller: scrollController,

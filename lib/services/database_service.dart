@@ -69,7 +69,7 @@ class DatabaseService {
           '''
         );
         for (String exercise in standardWorkouts){
-          List<Map<String,Object?>> records = await db.rawQuery('''
+          List<Map<String,dynamic>> records = await db.rawQuery('''
             SELECT id from $exerciseTableName where exercise_name = "$exercise";
             ''');
             if (records.isEmpty){
@@ -84,7 +84,7 @@ class DatabaseService {
   }
   void addExercise(String exercise) async {
     final db = await database;
-    List<Map<String,Object?>> records = await db.rawQuery('''
+    List<Map<String,dynamic>> records = await db.rawQuery('''
     SELECT id from $exerciseTableName where exercise_name = "$exercise";
     ''');
     if (records.isEmpty){
@@ -95,7 +95,7 @@ class DatabaseService {
 
   Future<int> _findExerciseId(String exercise) async {
     final db = await database;
-    List<Map<String,Object?>> records = await db.rawQuery('''
+    List<Map<String,dynamic>> records = await db.rawQuery('''
     SELECT id FROM $exerciseTableName WHERE exercise_name = "$exercise";
     ''');
     final exerciseId = records[0]["id"] as int;
@@ -105,7 +105,7 @@ class DatabaseService {
   Future<int> _findLogId(String exercise, String date) async {
     final db = await database;
     int exerciseId = await _findExerciseId(exercise);
-    List<Map<String,Object?>> records = await db.rawQuery('''
+    List<Map<String,dynamic>> records = await db.rawQuery('''
     SELECT log_id FROM $logTableName WHERE exercise_id = $exerciseId AND log_date = "$date";
     ''');
     final logId= records[0]["log_id"] as int;
@@ -124,16 +124,34 @@ class DatabaseService {
     });
   }
 
-  Future<List<Map<String, Object?>>> getLogs() async {
+  Future<List<Map<String, dynamic>>> getLogs() async {
     final db = await database;
-    List<Map<String,Object?>> records = await db.query(logTableName, columns: ["*"]);
+    List<Map<String,dynamic>> records = await db.query(logTableName, columns: ["*"]);
     return records;
 
   }
-
-  Future<List<Map<String,Object?>>> getLogsByDate( String date) async {
+  Future<List<Map<String, dynamic>>> getWorkouts() async {
     final db = await database;
-    List<Map<String,Object?>> records = await db.rawQuery('''
+    List<Map<String,dynamic>> logs = await getLogs();
+    List<Map<String,dynamic>> workouts = [];
+    for (Map<String,dynamic> value in logs) {
+      workouts.add({for (String a in value.keys)a:value[a]});
+    }
+    for (int i = 0; i < workouts.length; i++){
+      
+      int logId = workouts[i]["log_id"] as int;
+      print(logId);
+      List<Map<String, dynamic>> sets = await db.query(setsTableName, where: "log_id = ?", whereArgs: [logId]);
+      print(sets);
+      workouts[i]["reps"] = [for ( Map<String,dynamic>set in sets )set["number_of_reps"]];
+      workouts[i]["weights"] = [for ( Map<String,dynamic>set in sets )set["weight"]]; 
+    }
+    return workouts;
+  }
+
+  Future<List<Map<String,dynamic>>> getLogsByDate( String date) async {
+    final db = await database;
+    List<Map<String,dynamic>> records = await db.rawQuery('''
     SELECT * FROM $logTableName WHERE log_date = "$date";
     ''');
 
