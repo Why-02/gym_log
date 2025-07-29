@@ -23,10 +23,9 @@ class _ProfilePageState extends State<ProfilePage> {
   String ageText = "Age";
   String heightText = "10";
   String heightUnitText = "cm";
-  String selectedHeightUnitText = "cm";
   String weightText = "4.4";
   String targetWeightText = "4.6";
-  String weightUnitText = "Kg";
+  String weightUnitText = "kg";
 
   final double nameFont = 26;
   final double width = 412;
@@ -131,13 +130,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 SizedBox(height: spacing),
                 TextInfo(
                   textColor: textColor,
-                  text: weightText,
+                  text: "$weightText $weightUnitText",
                   textFont: textFont,
                 ),
                 SizedBox(height: spacing),
                 TextInfo(
                   textColor: textColor,
-                  text: targetWeightText,
+                  text: "$targetWeightText $weightUnitText",
                   textFont: textFont,
                 ),
               ],
@@ -176,8 +175,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
     final Map<String, dynamic>? extractedData = await showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
+      builder: (BuildContext context)  => StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) =>  AlertDialog(
           backgroundColor: backgroundColor,
           insetPadding: EdgeInsets.symmetric(vertical: 100),
           content: Center(
@@ -265,19 +264,30 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       Align(
                         alignment: Alignment.centerRight,
-                        child: DropdownButton(
-                          value: selectedHeightUnitText,
-                          items: heightList.map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(value: value, child: Text(value));
+                        child: DropdownButtonFormField(
+                          value: heightUnitController.text,
+                          items: heightList.map<DropdownMenuItem<String>>((
+                            String unit,
+                          ) {
+                            return DropdownMenuItem<String>(
+                              value: unit,
+                              child: Text(unit),
+                            );
                           }).toList(),
-                          onChanged: (String? value) {
+                          onChanged: (String? newUnit) {
                             setState(() {
-                              selectedHeightUnitText = value!;
-                              heightUnitController.text = value;
+                              heightUnitController.text = newUnit!;
                             });
                           },
-                          )
-                        )
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            constraints: BoxConstraints(
+                              minWidth: 50,
+                              maxWidth: 50,
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(height: 20),
@@ -291,14 +301,46 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
-                  TextFormField(
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
-                      SinglePeriodEnforcer(),
+                  Stack(
+                    children: <Widget>[
+                      TextFormField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
+                          SinglePeriodEnforcer(),
+                        ],
+                        keyboardType: TextInputType.numberWithOptions(),
+                        controller: weightController,
+                        decoration: InputDecoration(
+                          hintText: "Update your weight",
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: DropdownButtonFormField(
+                          value: weightUnitController.text,
+                          items: weightList.map<DropdownMenuItem<String>>((
+                            String unit,
+                          ) {
+                            return DropdownMenuItem<String>(
+                              value: unit,
+                              child: Text(unit),
+                            );
+                          }).toList(),
+                          onChanged: (String? newUnit) {
+                            setState(() {
+                              weightUnitController.text = newUnit!;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            constraints: BoxConstraints(
+                              minWidth: 50,
+                              maxWidth: 50,
+                            ),
+                          ),
+                        ),
+                      )
                     ],
-                    keyboardType: TextInputType.numberWithOptions(),
-                    controller: weightController,
-                    decoration: InputDecoration(hintText: "Update your weight"),
                   ),
                   SizedBox(height: 20),
                   Align(
@@ -311,32 +353,70 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                   ),
-                  TextFormField(
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
-                      SinglePeriodEnforcer(),
-                    ],
-                    keyboardType: TextInputType.numberWithOptions(),
-                    controller: targetWeightController,
-                    decoration: InputDecoration(
-                      hintText: "Update your target weight",
-                    ),
+                  Stack(
+                    children: <Widget>[
+                      TextFormField(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
+                          SinglePeriodEnforcer(),
+                        ],
+                        keyboardType: TextInputType.numberWithOptions(),
+                        controller: targetWeightController,
+                        decoration: InputDecoration(
+                          hintText: "Update your target weight",
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: DropdownButtonFormField(
+                          value: weightUnitController.text,
+                          items: weightList.map<DropdownMenuItem<String>>((
+                            String unit,
+                          ) {
+                            return DropdownMenuItem<String>(
+                              value: unit,
+                              child: Text(unit),
+                            );
+                          }).toList(),
+                          onChanged: null,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            constraints: BoxConstraints(
+                              minWidth: 50,
+                              maxWidth: 50,
+                            ),
+                          ),
+                        ),
+                      )
+                    ]
                   ),
                   SizedBox(height: 30),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text("Close"),
+                        child: Text(
+                          "Close",
+                          style: TextStyle(
+                            fontSize: textFont,
+                          ),
+                        ),
                       ),
+                      SizedBox(width: 50,),
                       ElevatedButton(
                         onPressed: () {
-                          Map<String, String> extractedData = {"username" : userNameController.text, "birthday" : birthdayController.text, "height" : heightController.text, "heightUnit" : heightUnitController.text,  "weight" : weightController.text, "target weight" : targetWeightController.text};
+                          Map<String, String> extractedData = {"username" : userNameController.text, "birthday" : birthdayController.text, "height" : heightController.text, "heightUnit" : heightUnitController.text,  "weight" : weightController.text, "weightUnit" : weightUnitController.text, "target weight" : targetWeightController.text};
                           Navigator.pop(context, extractedData);
                         },
-                        child: Text("Save"),
+                        child: Text(
+                          "Save",
+                          style: TextStyle(
+                            fontSize: textFont,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -344,8 +424,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
     if (extractedData != null){
       setState(() {
@@ -354,6 +434,7 @@ class _ProfilePageState extends State<ProfilePage> {
         heightText = extractedData["height"];
         heightUnitText = extractedData["heightUnit"];
         weightText = extractedData["weight"];
+        weightUnitText = extractedData["weightUnit"];
         targetWeightText = extractedData["target weight"];
       });
     }
