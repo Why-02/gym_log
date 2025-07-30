@@ -140,9 +140,30 @@ class DatabaseService {
     for (int i = 0; i < workouts.length; i++){
       
       int logId = workouts[i]["log_id"] as int;
-      print(logId);
       List<Map<String, dynamic>> sets = await db.query(setsTableName, where: "log_id = ?", whereArgs: [logId]);
-      print(sets);
+      workouts[i]["reps"] = [for ( Map<String,dynamic>set in sets )set["number_of_reps"]];
+      workouts[i]["weights"] = [for ( Map<String,dynamic>set in sets )set["weight"]]; 
+    }
+    return workouts;
+  }
+
+Future<List<Map<String, dynamic>>> getWorkoutsperDate({String date = ""}) async {
+    final db = await database;
+    List<Map<String,dynamic>> logs;
+    if (date == ""){
+    logs = await getLogs();
+    }
+    else{
+      logs = await getLogsByDate(date);
+    }
+    List<Map<String,dynamic>> workouts = [];
+    for (Map<String,dynamic> value in logs) {
+      workouts.add({for (String a in value.keys)a:value[a]});
+    }
+    for (int i = 0; i < workouts.length; i++){
+      
+      int logId = workouts[i]["log_id"] as int;
+      List<Map<String, dynamic>> sets = await db.query(setsTableName, where: "log_id = ?", whereArgs: [logId]);
       workouts[i]["reps"] = [for ( Map<String,dynamic>set in sets )set["number_of_reps"]];
       workouts[i]["weights"] = [for ( Map<String,dynamic>set in sets )set["weight"]]; 
     }

@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:gym_log/features/workout_logs/workout_logs_view_model.dart';
+import 'package:provider/provider.dart';
 
-class WorkoutLogsHeader extends StatefulWidget {
+class WorkoutLogsHeader extends StatelessWidget {
   const WorkoutLogsHeader({super.key});
 
-  @override
-  State<WorkoutLogsHeader> createState() => _WorkoutLogsHeaderState();
-}
+  
 
-class _WorkoutLogsHeaderState extends State<WorkoutLogsHeader> {
-
-  DateTime selectedDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
-    
+    final WorkoutLogsViewModel viewModel = context.watch<WorkoutLogsViewModel>();
     return  AppBar(
         title: Center(
           child: Row(
@@ -24,16 +21,14 @@ class _WorkoutLogsHeaderState extends State<WorkoutLogsHeader> {
                     context: context, 
                     firstDate: DateTime(2000), 
                     lastDate: DateTime(2100),
-                    currentDate: selectedDate,  
+                    currentDate: viewModel.convertStringToDate(viewModel.date),  
                   );
-                  if (date != null)
-                  {
-                    setState(() {
-                      selectedDate = date;
-                      
-                    },);
+                  if (date != null) {
+                    viewModel.setDate(viewModel.convertDateToString(date));
+                    viewModel.setLogsPerDate();
                   }
-                }, child: Text("$selectedDate"))
+                  
+                }, child: Text(viewModel.date))
             ],
           )
         ),
