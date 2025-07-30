@@ -25,7 +25,7 @@ class WorkoutLogsHeader extends StatelessWidget {
                   );
                   if (date != null) {
                     viewModel.setDate(viewModel.convertDateToString(date));
-                    viewModel.setLogsPerDate();
+                    viewModel.setLogsPerDate(date: viewModel.date);
                   }
                   
                 }, child: Text(viewModel.date))

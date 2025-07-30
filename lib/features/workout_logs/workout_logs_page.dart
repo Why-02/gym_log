@@ -45,8 +45,6 @@ class _WorkoutLogsPageState extends State<WorkoutLogsPage> {
   @override
   void initState() {
     super.initState();
-    
-    
     // scrollUp();
   }
   
@@ -65,7 +63,7 @@ class _WorkoutLogsPageState extends State<WorkoutLogsPage> {
           WorkoutLogsHeader(),
           ConstrainedBox(
             constraints: BoxConstraints(maxWidth:WIDTH,maxHeight:0.5*HEIGHT  - keyboardOffset),
-            child: ListView.builder(
+            child: viewModel.isLoading ? Center(child: CircularProgressIndicator()) : ListView.builder(
               dragStartBehavior: DragStartBehavior.down,
               controller: scrollController,
               reverse: true,
