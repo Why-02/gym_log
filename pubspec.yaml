@@ -57,7 +57,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/icons/edit_icon.png
+    - assets/icons/editicon.png
     - assets/icons/age_icon.png
     - assets/icons/birthday_icon.png
     - assets/icons/height_icon.png
