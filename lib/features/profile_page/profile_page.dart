@@ -32,8 +32,8 @@ class _ProfilePageState extends State<ProfilePage> {
   final double nameFont = 26;
   double width = 412;
   double height = 915;
-  Color backgroundColor = Colors.white;
-  Color textColor = Colors.black;
+  Color backgroundColor = Colors.black;
+  Color textColor = Colors.white;
   final double textFont = 20;
   final String editIcon = "assets/icons/editicon.png";
   final String birthdayIcon = "assets/icons/birthday_icon.png";
@@ -41,7 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final String heightIcon = "assets/icons/height_icon.png";
   final String weightIcon = "assets/icons/weight_icon.png";
   final String targetWeightIcon = "assets/icons/target_weight_icon.png";
-  final double spacing = 5.0;
+  double spacing = 10.0;
 
   int cameraIndex = 0;
   List<CameraDescription> cameras = [];
@@ -132,29 +132,32 @@ class _ProfilePageState extends State<ProfilePage> {
     int month = (age.inDays % 365) ~/ 30;
     int day = ((age.inDays % 365) % 30);
 
-    switch (year) {
-      case <1 :
-        switch (month) {
+    switch (age.isNegative) {
+      case true :
+        return "Not born yet?";
+      default :
+        switch (year) {
           case <1 :
-            switch (day) {
+            switch (month) {
               case <1 :
-                return "just how?";
+                switch (day) {
+                  case <=1:
+                    return "1 day old";
+                  default :
+                    return "$day days old";
+                }
               case 1 :
-                return "$day day old";
+                return "1 month old";
+              case >1 && !=12 :
+                return "$month months old";
               default :
-                return "$day days old";
+                return "11 months old";
             }
           case 1 :
-            return "$month months old";
-          case >1 && !=12 :
-            return "$month months old";
+            return "1 year old";
           default :
-          return "1 year old";
+            return "$year years old";
         }
-      case 1 :
-        return "$year year old";
-      default :
-        return "$year years old";
     }
   }
   
@@ -162,6 +165,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+    spacing = height*0.010;
     DateTime parseData = DateFormat("dd/MM/yyyy").parse(birthdayText);
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -169,7 +173,7 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(width/8),
+            bottom: Radius.circular(width/6),
           )
         ),
         backgroundColor: backgroundColor,
@@ -183,6 +187,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 ? FileImage(File(imagePath))
                 : NetworkImage(
                     "https://ziggyfamily.com/cdn/shop/articles/chats-blancs-3_520x500_29f247a5-0663-457d-9d84-2152894d15b9.jpg?v=1748334872",
+                    webHtmlElementStrategy: WebHtmlElementStrategy.never,
+                    scale: 0.5,
                   ),
           ),
         ),
@@ -191,50 +197,58 @@ class _ProfilePageState extends State<ProfilePage> {
           nameText,
           style: TextStyle(color: textColor, fontSize: nameFont),
         ),
-        actions: [handleEditButton(context)],
+        actions: [handleEditButton(context)],  
       ),
       body: SingleChildScrollView(
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      IconInfo(iconAsset: birthdayIcon, textColor: textColor, width: width, height : height),
-                      TextInfo(textColor: textColor, text: birthdayText, textFont: textFont, width: width, height : height),
-                    ],
-                  ),
-                  SizedBox(height: spacing),
-                  Row(
-                    children: [
-                      IconInfo(iconAsset: ageIcon, textColor: textColor, width: width, height : height),
-                      TextInfo(textColor: textColor, text: age(DateTime.now(), parseData), textFont: textFont, width: width, height : height),
-                    ],
-                  ),
-                  SizedBox(height: spacing),
-                  Row(
-                    children: [
-                      IconInfo(iconAsset: heightIcon, textColor: textColor, width: width, height : height),
-                      TextInfo(textColor: textColor, text: "$heightText $heightUnitText", textFont: textFont, width: width, height : height),
-                    ],
-                  ),
-                  SizedBox(height: spacing),
-                  Row(
-                    children: [
-                      IconInfo(iconAsset: weightIcon, textColor: textColor, width: width, height : height),
-                      TextInfo(textColor: textColor, text: "$weightText $weightUnitText", textFont: textFont, width: width, height : height),
-                    ],
-                  ),
-                  SizedBox(height: spacing),
-                  Row(
-                    children: [
-                      IconInfo(iconAsset: targetWeightIcon, textColor: textColor, width: width, height : height),
-                      TextInfo(textColor: textColor, text: "$targetWeightText $weightUnitText", textFont: textFont, width: width, height : height),
-                    ],
-                  ),
-                ],
+              Padding(
+                padding: EdgeInsets.only(left: width*0.2, top: spacing*5),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        IconInfo(iconAsset: birthdayIcon, textColor: textColor, width: width, height : height),
+                        SizedBox(width: spacing),
+                        TextInfo(textColor: textColor, text: birthdayText, textFont: textFont, width: width, height : height),
+                      ],
+                    ),
+                    SizedBox(height: spacing),
+                    Row(
+                      children: [
+                        IconInfo(iconAsset: ageIcon, textColor: textColor, width: width, height : height),
+                        SizedBox(width: spacing),
+                        TextInfo(textColor: textColor, text: age(DateTime.now(), parseData), textFont: textFont, width: width, height : height),
+                      ],
+                    ),
+                    SizedBox(height: spacing),
+                    Row(
+                      children: [
+                        IconInfo(iconAsset: heightIcon, textColor: textColor, width: width, height : height),
+                        SizedBox(width: spacing),
+                        TextInfo(textColor: textColor, text: "$heightText $heightUnitText", textFont: textFont, width: width, height : height),
+                      ],
+                    ),
+                    SizedBox(height: spacing),
+                    Row(
+                      children: [
+                        IconInfo(iconAsset: weightIcon, textColor: textColor, width: width, height : height),
+                        SizedBox(width: spacing),
+                        TextInfo(textColor: textColor, text: "$weightText $weightUnitText", textFont: textFont, width: width, height : height),
+                      ],
+                    ),
+                    SizedBox(height: spacing),
+                    Row(
+                      children: [
+                        IconInfo(iconAsset: targetWeightIcon, textColor: textColor, width: width, height : height),
+                        SizedBox(width: spacing),
+                        TextInfo(textColor: textColor, text: "$targetWeightText $weightUnitText", textFont: textFont, width: width, height : height),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -248,12 +262,19 @@ class _ProfilePageState extends State<ProfilePage> {
       onPressed: handleEditButtonPressed,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(1),
-        child: Image.asset(
-          editIcon,
-          width: 66 / 1.5,
-          height: 40 / 1.5,
-          fit: BoxFit.fill,
-          color: textColor,
+        child: Container(
+          margin: EdgeInsetsDirectional.only(end: spacing*2.5),
+          constraints: BoxConstraints(
+            maxHeight: height * 0.075,
+            maxWidth: height * 0.10,
+          ),
+          child: Image.asset(
+            editIcon,
+            width: width * 0.1,
+            height: width * 0.075,
+            fit: BoxFit.fill,
+            color: textColor,
+          ),
         ),
       ),
     );
@@ -357,7 +378,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         TextField(
                           style: TextStyle(fontSize: textFont - 4, color: textColor),
                           inputFormatters: [
-                            LengthLimitingTextInputFormatter(10),
+                            LengthLimitingTextInputFormatter(6),
                             FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
                             SinglePeriodEnforcer(),
                           ],
@@ -422,7 +443,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         TextFormField(
                           style: TextStyle(fontSize: textFont - 4, color: textColor),
                           inputFormatters: [
-                            LengthLimitingTextInputFormatter(10),
+                            LengthLimitingTextInputFormatter(6),
                             FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
                             SinglePeriodEnforcer(),
                           ],
@@ -482,7 +503,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         TextFormField(
                           style: TextStyle(fontSize: textFont - 4, color: textColor),
                           inputFormatters: [
-                            LengthLimitingTextInputFormatter(10),
+                            LengthLimitingTextInputFormatter(6),
                             FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
                             SinglePeriodEnforcer(),
                           ],
@@ -600,10 +621,9 @@ class IconInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        border: BoxBorder.all(
-
-        )
+      constraints: BoxConstraints(
+        maxHeight: height*0.12,
+        maxWidth: height*0.12,
       ),
       child: Image.asset(
         iconAsset,
@@ -634,19 +654,14 @@ class TextInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: BoxBorder.all()
-      ),
-      child: SizedBox(
-        width: width/2,
-        child: Text(
-          text,
-          style: TextStyle(
-            height: height / 15.5 / textFont,
-            color: textColor,
-            fontSize: textFont,
-          ),
+    return SizedBox(
+      width: width*0.45,
+      child: Text(
+        text,
+        style: TextStyle(
+          height: height / 15.5 / textFont,
+          color: textColor,
+          fontSize: textFont,
         ),
       ),
     );
