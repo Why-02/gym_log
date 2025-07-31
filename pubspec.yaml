@@ -63,3 +63,4 @@ flutter:
     - assets/icons/height_icon.png
     - assets/icons/target_weight_icon.png
     - assets/icons/weight_icon.png
+    - assets/default_profile_picture.jpg

@@ -15,7 +15,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final String imagePath = "";
+  final String imagePath = "assets/default_profile_picture.jpg";
 
   List<String> heightList = <String>['cm', 'ft'];
   List<String> weightList = <String>['kg', 'lb'];
@@ -41,6 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final String heightIcon = "assets/icons/height_icon.png";
   final String weightIcon = "assets/icons/weight_icon.png";
   final String targetWeightIcon = "assets/icons/target_weight_icon.png";
+  
   double spacing = 10.0;
 
   int cameraIndex = 0;
@@ -165,7 +166,6 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    spacing = height*0.010;
     DateTime parseData = DateFormat("dd/MM/yyyy").parse(birthdayText);
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -173,31 +173,29 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(width/6),
+            bottom: Radius.circular(75),
           )
         ),
         backgroundColor: backgroundColor,
-        toolbarHeight: height / 6,
+        toolbarHeight: 150,
         elevation: 20.0,
         shadowColor: textColor,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: CircleAvatar(
-            foregroundImage: imagePath != ""
-                ? FileImage(File(imagePath))
-                : NetworkImage(
-                    "https://ziggyfamily.com/cdn/shop/articles/chats-blancs-3_520x500_29f247a5-0663-457d-9d84-2152894d15b9.jpg?v=1748334872",
-                    webHtmlElementStrategy: WebHtmlElementStrategy.never,
-                    scale: 0.5,
-                  ),
+            foregroundImage: AssetImage(imagePath),
           ),
         ),
-        leadingWidth: width / 3,
+        leadingWidth: 150,
         title: Text(
           nameText,
-          style: TextStyle(color: textColor, fontSize: nameFont),
+          style: TextStyle(color: textColor, fontSize: nameFont-4),
+          maxLines: 2,
         ),
-        actions: [handleEditButton(context)],  
+        actions: [
+          handleEditButton(context), 
+          SizedBox(width: 20,),
+        ],  
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -210,41 +208,41 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     Row(
                       children: [
-                        IconInfo(iconAsset: birthdayIcon, textColor: textColor, width: width, height : height),
+                        IconInfo(iconAsset: birthdayIcon, textColor: textColor, textFont: textFont),
                         SizedBox(width: spacing),
-                        TextInfo(textColor: textColor, text: birthdayText, textFont: textFont, width: width, height : height),
+                        TextInfo(textColor: textColor, text: birthdayText, textFont: textFont, width: width,),
                       ],
                     ),
                     SizedBox(height: spacing),
                     Row(
                       children: [
-                        IconInfo(iconAsset: ageIcon, textColor: textColor, width: width, height : height),
+                        IconInfo(iconAsset: ageIcon, textColor: textColor, textFont: textFont),
                         SizedBox(width: spacing),
-                        TextInfo(textColor: textColor, text: age(DateTime.now(), parseData), textFont: textFont, width: width, height : height),
+                        TextInfo(textColor: textColor, text: age(DateTime.now(), parseData), textFont: textFont, width: width,),
                       ],
                     ),
                     SizedBox(height: spacing),
                     Row(
                       children: [
-                        IconInfo(iconAsset: heightIcon, textColor: textColor, width: width, height : height),
+                        IconInfo(iconAsset: heightIcon, textColor: textColor, textFont: textFont),
                         SizedBox(width: spacing),
-                        TextInfo(textColor: textColor, text: "$heightText $heightUnitText", textFont: textFont, width: width, height : height),
+                        TextInfo(textColor: textColor, text: "$heightText $heightUnitText", textFont: textFont, width: width,),
                       ],
                     ),
                     SizedBox(height: spacing),
                     Row(
                       children: [
-                        IconInfo(iconAsset: weightIcon, textColor: textColor, width: width, height : height),
+                        IconInfo(iconAsset: weightIcon, textColor: textColor, textFont: textFont),
                         SizedBox(width: spacing),
-                        TextInfo(textColor: textColor, text: "$weightText $weightUnitText", textFont: textFont, width: width, height : height),
+                        TextInfo(textColor: textColor, text: "$weightText $weightUnitText", textFont: textFont, width: width,),
                       ],
                     ),
                     SizedBox(height: spacing),
                     Row(
                       children: [
-                        IconInfo(iconAsset: targetWeightIcon, textColor: textColor, width: width, height : height),
+                        IconInfo(iconAsset: targetWeightIcon, textColor: textColor, textFont: textFont),
                         SizedBox(width: spacing),
-                        TextInfo(textColor: textColor, text: "$targetWeightText $weightUnitText", textFont: textFont, width: width, height : height),
+                        TextInfo(textColor: textColor, text: "$targetWeightText $weightUnitText", textFont: textFont, width: width,),
                       ],
                     ),
                   ],
@@ -254,28 +252,28 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 3,
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.note_add), label: "Workout Log"),
+          BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: "Progress"),
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: "Strategies"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile")
+        ]
+      ),
     );
   }
 
   TextButton handleEditButton(BuildContext context) {
     return TextButton(
       onPressed: handleEditButtonPressed,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(1),
-        child: Container(
-          margin: EdgeInsetsDirectional.only(end: spacing*2.5),
-          constraints: BoxConstraints(
-            maxHeight: height * 0.075,
-            maxWidth: height * 0.10,
-          ),
-          child: Image.asset(
-            editIcon,
-            width: width * 0.1,
-            height: width * 0.075,
-            fit: BoxFit.fill,
-            color: textColor,
-          ),
-        ),
+      child: Image(
+        image: AssetImage(editIcon),
+        width: 40,
+        height: 40,
+        fit: BoxFit.fill,
+        color: textColor,
       ),
     );
   }
@@ -296,7 +294,6 @@ class _ProfilePageState extends State<ProfilePage> {
         builder: (BuildContext context, StateSetter setState) =>  AlertDialog(
           scrollable: true,
           backgroundColor: backgroundColor,
-          insetPadding: EdgeInsets.only(top: 100, bottom: 0,),
           content: SingleChildScrollView(
             child: Center(
               child: Padding(
@@ -304,12 +301,17 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Column(
                   children: [
                     Text(
-                      "Modify your profile information",
+                      "Update your profile",
                       style: TextStyle(fontSize: textFont, color: textColor),
+                      maxLines: 1,
                     ),
                     SizedBox(height: 20),
                     //_buildUI(),
-                    //SizedBox(height: 20),
+                    CircleAvatar(
+                      radius: 75,
+                      foregroundImage: AssetImage(imagePath),
+                    ),
+                    SizedBox(height: 20),
                     Align(
                       alignment: Alignment.bottomLeft,
                       child: Text(
@@ -327,6 +329,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       decoration: InputDecoration(
                         hintText: "Update your username",
                       ),
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(20),
+                      ],
                     ),
                     SizedBox(height: 20),
                     Align(
@@ -500,19 +505,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     Stack(
                       children: <Widget>[
-                        TextFormField(
-                          style: TextStyle(fontSize: textFont - 4, color: textColor),
-                          inputFormatters: [
-                            LengthLimitingTextInputFormatter(6),
-                            FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
-                            SinglePeriodEnforcer(),
-                          ],
-                          keyboardType: TextInputType.numberWithOptions(),
-                          controller: targetWeightController,
-                          decoration: InputDecoration(
-                            hintText: "Update your target weight",
-                          ),
-                        ),
                         Align(
                           alignment: Alignment.centerRight,
                           child: DropdownButtonFormField(
@@ -527,7 +519,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: Text(unit),
                               );
                             }).toList(),
-                            onChanged: null,
+                            onChanged: (String? newUnit)  {
+                              setState(() {
+                                
+                              });
+                            },
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               constraints: BoxConstraints(
@@ -540,7 +536,20 @@ class _ProfilePageState extends State<ProfilePage> {
                               color: textColor,
                             ),
                           ),
-                        )
+                        ),
+                        TextFormField(
+                          style: TextStyle(fontSize: textFont - 4, color: textColor),
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(6),
+                            FilteringTextInputFormatter.allow(RegExp(r'[\d\.]')),
+                            SinglePeriodEnforcer(),
+                          ],
+                          keyboardType: TextInputType.numberWithOptions(),
+                          controller: targetWeightController,
+                          decoration: InputDecoration(
+                            hintText: "Update your target weight",
+                          ),
+                        ),
                       ]
                     ),
                     SizedBox(height: 30),
@@ -611,27 +620,20 @@ class SinglePeriodEnforcer extends TextInputFormatter {
 }
 
 class IconInfo extends StatelessWidget {
-  const IconInfo({super.key, required this.iconAsset, required this.textColor, required this.width, required this.height});
+  const IconInfo({super.key, required this.iconAsset, required this.textColor, required this.textFont});
 
   final String iconAsset;
   final Color textColor;
-  final double width;
-  final double height;
+  final double textFont;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(
-        maxHeight: height*0.12,
-        maxWidth: height*0.12,
-      ),
-      child: Image.asset(
-        iconAsset,
-        width: width/5.5,
-        height: width/5.5,
-        fit: BoxFit.fill,
-        color: textColor,
-      ),
+    return Image.asset(
+      iconAsset,
+      width: 65,
+      height: 65,
+      fit: BoxFit.fill,
+      color: textColor,
     );
   }
 }
@@ -643,14 +645,12 @@ class TextInfo extends StatelessWidget {
     required this.text,
     required this.textFont,
     required this.width,
-    required this.height,
   });
 
   final Color textColor;
   final String text;
   final double textFont;
   final double width;
-  final double height; 
 
   @override
   Widget build(BuildContext context) {
@@ -659,7 +659,7 @@ class TextInfo extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          height: height / 15.5 / textFont,
+          height: 65 / textFont,
           color: textColor,
           fontSize: textFont,
         ),
