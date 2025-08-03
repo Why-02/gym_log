@@ -1,4 +1,4 @@
-name: git_log
+name: gym_log
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -64,3 +64,5 @@ flutter:
     - assets/icons/target_weight_icon.png
     - assets/icons/weight_icon.png
     - assets/default_profile_picture.jpg
+    - assets/icons/male_icon.png
+    - assets/icons/female_icon.png

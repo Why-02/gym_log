@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:git_log/features/profile_page/profile_page.dart';
+import 'package:gym_log/features/profile_page/profile_page.dart';
 
 void main() {
   runApp(const MyApp());
